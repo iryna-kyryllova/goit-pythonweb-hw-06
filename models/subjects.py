@@ -1,3 +1,4 @@
+from __future__ import annotations
 from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import Base
@@ -10,6 +11,6 @@ class Subject(Base):
     name: Mapped[str] = mapped_column(String(50))
 
     teacher_id: Mapped[int] = mapped_column(ForeignKey('teachers.id'), nullable=False)
-    teacher: Mapped["Teacher"] = relationship('Teacher', back_populates="subjects")
+    teacher: Mapped[Teacher] = relationship('Teacher', back_populates="subjects")
 
-    mark: Mapped[list["Mark"]] = relationship('Mark', back_populates="subjects")
+    marks: Mapped[list[Mark]] = relationship('Mark', back_populates="subject")
