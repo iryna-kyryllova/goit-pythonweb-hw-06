@@ -1,7 +1,6 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from db import Base
-from models.groups import Group
 
 
 class Student(Base):
@@ -11,4 +10,7 @@ class Student(Base):
     name: Mapped[str] = mapped_column(String(50))
     email: Mapped[str] = mapped_column(String(50), unique=True)
 
-    group_id: Mapped[Group] = relationship('Group', back_populates="students")
+    group_id: Mapped[int] = mapped_column(ForeignKey('groups.id'), nullable=False)
+    group: Mapped["Group"] = relationship('Group', back_populates="students")
+
+    marks: Mapped[list["Mark"]] = relationship('Mark', back_populates="students")
